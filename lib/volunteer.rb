@@ -13,7 +13,7 @@ class Volunteer
       name = volunteer.fetch("name")
 # The information comes out of the database as a string.
       project_id = volunteer.fetch("project_id").to_i()
-      volunteers.push(Volunteer.new({:name => name, :list_id => list_id}))
+      volunteers.push(Volunteer.new({:name => name, :project_id => project_id}))
     end
   volunteers
   end

@@ -1,8 +1,8 @@
 class Project
-  attr_reader(:name, :id)
+  attr_reader(:title, :id)
 
   def initialize(attributes)
-    @name = attributes.fetch(:name)
+    @title = attributes.fetch(:title)
     @id = attributes.fetch(:id)
   end
 
@@ -10,20 +10,24 @@ class Project
     returned_projects = DB.exec("SELECT * FROM projects;")
     projects = []
     returned_projects.each() do |project|
-      name = project.fetch("name")
+      title  = project.fetch("title")
       id = project.fetch("id").to_i()
-      projects.push(Project.new({:name => name, :id => id}))
+      projects.push(Project.new({:title=> title, :id => id}))
     end
     projects
   end
 
   def save
-    result = DB.exec("INSERT INTO projects (name) VALUES ('#{@name}') RETURNING id;")
+    result = DB.exec("INSERT INTO projects (name) VALUES ('#{@title}') RETURNING id;")
     @id = result.first().fetch("id").to_i()
   end
 
   def ==(another_project)
-    self.name().==(another_project.name()).&(self.id().==(another_project.id()))
+    self.title().==(another_project.title()).&(self.id().==(another_project.id()))
+  end
+
+  def title
+    @title
   end
 
   def self.find(id)
@@ -40,17 +44,17 @@ class Project
     list_volunteers = []
     volunteers = DB.exec("SELECT * FROM volunteers WHERE project_id = #{self.id()};")
     volunteers.each() do |volunteer|
-      description = volunteer.fetch("description")
+      name= volunteer.fetch("name")
       project_id = volunteer.fetch("project_id").to_i()
-      list_volunteers.push(Volunteer.new({:description => description, :project_id => project_id}))
+      list_volunteers.push(Volunteer.new({:name => name, :project_id => project_id}))
     end
     list_volunteers
   end
 
   def update(attributes)
-    @name = attributes.fetch(:name)
+    @title= attributes.fetch(:title)
     @id = self.id()
-    DB.exec("UPDATE projects SET name = '#{@name}' WHERE id = #{@id};")
+    DB.exec("UPDATE projects SET name = '#{@title}' WHERE id = #{@id};")
   end
 
   def delete

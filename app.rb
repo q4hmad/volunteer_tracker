@@ -2,55 +2,55 @@ require ("sinatra")
 require ("pry")
 require ("sinatra/reloader")
 also_reload(".lib/**/*.rb")
-require ("./lib/task")
-require("./lib/list")
+require ("./lib/volunteer")
+require("./lib/project")
 require ("pg")
 
-DB = PG.connect({:dbname => "to_do"})
+DB = PG.connect({:dbname => "volunteer_tracker"})
 
 get("/") do
-  @lists = List.all()
+  @project = Project.all()
   erb(:index)
 end
 
-post("/lists") do
+post("/projects") do
   name = params.fetch("name")
-  list = List.new({:name => name, :id => nil})
-  list.save()
-  @lists = List.all()
+  project = Project.new({:name => name, :id => nil})
+  project.save()
+  @projects = Project.all()
   erb(:index)
 end
 
-get("/lists/:id") do
-  @list = List.find(params.fetch("id").to_i())
-  erb(:list)
+get("/projects/:id") do
+  @project = Project.find(params.fetch("id").to_i())
+  erb(:project)
 end
 
-post("/tasks") do
-  description = params.fetch("description")
-  due_date = params.fetch("due_date")
-  list_id = params.fetch("list_id").to_i()
-  task = Task.new({:description => description, :due_date => due_date, :list_id => list_id})
-  task.save()
-  @list = List.find(list_id)
-  erb(:list)
-end
-
-get("/lists/:id/edit") do
-  @list = List.find(params.fetch("id").to_i())
-  erb(:list_edit)
-end
-
-patch("/lists/:id") do
+post("/volunteers") do
   name = params.fetch("name")
-  @list = List.find(params.fetch("id").to_i())
-  @list.update({:name => name})
-  erb(:list)
+
+  project_id = params.fetch("project_id").to_i()
+  volunteer = Volunteer.new({:name => name, :project_id => project_id})
+  volunteer.save()
+  @project = Project.find(project_id)
+  erb(:project)
 end
 
-delete("/lists/:id") do
-  @list = List.find(params.fetch("id").to_i())
-  @list.delete()
-  @lists = List.all()
+get("/projects/:id/edit") do
+  @project = Project.find(params.fetch("id").to_i())
+  erb(:project_edit)
+end
+
+patch("/projects/:id") do
+  name = params.fetch("name")
+   @project =Project.find(params.fetch("id").to_i())
+    @project.update({:name => name})
+  erb(:project)
+end
+
+delete("/projects/:id") do
+    @project = Project.find(params.fetch("id").to_i())
+    @project.delete()
+    @project = Project.all()
   erb(:index)
 end

@@ -1,62 +1,58 @@
-require ("rspec")
-require ("pg")
-require ("pry")
-require ("task")
-require("spec_helper")
+require "spec_helper"
 
-# DB is a constant. A constant is a variable that's available everywhere in your program. They should be used very rarely, and generally only for application-wide configuration settings like the name of your database. By convention, Constants have all upper-case names.
-DB = PG.connect({:dbname => "to_do_test"})
-
-RSpec.configure do |config|
-  config.after(:each) do
-    DB.exec("DELETE FROM tasks *;")
-  end
-end
-
-describe(Task) do
-  describe(".all") do
-    it("is empty at first and then lists by order") do
-      expect(Task.all()).to(eq([]))
-    end
-  end
-
-  describe("#save") do
-    it("adds a task to the array of saved tasks") do
-      test_task = Task.new({:description => "learn SQL", :due_date => "2017-09-25", :list_id => 1})
-      test_task.save()
-      expect(Task.all()).to(eq([test_task]))
-    end
-  end
-
-  describe("#description") do
-    it("lets you read the description out") do
-      test_task = Task.new({:description => "learn SQL", :due_date => "2017-09-25", :list_id => 1})
-      expect(test_task.description()).to(eq("learn SQL"))
-    end
-  end
-
-  describe("#list_id") do
-    it("lets you read the list ID out") do
-      test_task = Task.new({:description => "learn SQL", :due_date => "2017-09-25", :list_id => 1})
-      expect(test_task.list_id()).to(eq(1))
-    end
-  end
-
-  describe("#==") do
-    it("is the same task if it has the same description and list ID") do
-      task1 = Task.new({:description => "learn SQL", :due_date => "2017-09-25", :list_id => 1})
-      task2 = Task.new({:description => "learn SQL", :due_date => "2017-09-25", :list_id => 1})
-      expect(task1).to(eq(task2))
-    end
-  end
-
-  describe(".all") do
-    it("order by due date") do
-      task1 = Task.new({:description => "learn SQL", :due_date => "2017-09-25", :list_id => 1})
-      task1.save()
-      task2 = Task.new({:description => "refactor code", :due_date => "2017-09-28", :list_id => 2})
-      task2.save()
-      expect(Task.all).to(eq([task1, task2]))
+describe Volunteer do
+  describe '#name' do
+    it 'returns the name of the volunteer' do
+      test_volunteer = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      expect(test_volunteer.name).to eq 'Jane'
     end
   end
 end
+
+#   describe '#project_id' do
+#     it 'returns the project_id of the volunteer' do
+#       test_volunteer = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+#       expect(test_volunteer.project_id).to eq 1
+#     end
+#   end
+#
+#   describe '#==' do
+#     it 'checks for equality based on the name of a volunteer' do
+#       volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+#       volunteer2 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+#       expect(volunteer1 == volunteer2).to eq true
+#     end
+#   end
+#
+#   context '.all' do
+#     it 'is empty to start' do
+#       expect(Volunteer.all).to eq []
+#     end
+#
+#     it 'returns all volunteers' do
+#       volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+#       volunteer1.save
+#       volunteer2 = Volunteer.new({:name => 'Joe', :project_id => 1, :id => nil})
+#       volunteer2.save
+#       expect(Volunteer.all).to eq [volunteer1, volunteer2]
+#     end
+#   end
+#
+#   describe '#save' do
+#     it 'adds a volunteer to the database' do
+#       volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+#       volunteer1.save
+#       expect(Volunteer.all).to eq [volunteer1]
+#     end
+#   end
+#
+#   describe '.find' do
+#     it 'returns a volunteer by id' do
+#       volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+#       volunteer1.save
+#       volunteer2 = Volunteer.new({:name => 'Joe', :project_id => 1, :id => nil})
+#       volunteer2.save
+#       expect(Volunteer.find(volunteer1.id)).to eq volunteer1
+#     end
+#   end
+# end
