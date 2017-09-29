@@ -38,3 +38,10 @@ patch("/projects/:id") do
   @projects.update({:title => title})
   erb(:project)
 end
+
+delete("/projects/:id") do
+  @projects = Project.find(params.fetch("id").to_i())
+  @projects.delete()
+  @projects = Project.all()
+  erb(:index)
+end
