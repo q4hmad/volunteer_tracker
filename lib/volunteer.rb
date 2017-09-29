@@ -3,9 +3,9 @@ class Volunteer
   attr_accessor(:name, :project_id)
 
   def initialize(attributes)
-    @name = attributes.fetch(:name)
-    @project_id = attributes.fetch(:project_id)
-    @id = attributes.fetch(:project_id)
+    @name = attributes[:name]
+    @project_id = attributes[:project_id].to_i
+    @id = attributes[:id]
   end
 
   def name
@@ -17,7 +17,7 @@ class Volunteer
   end
 
   def ==(another_volunteer)
-      self.name().==(another_volunteer.name())
+        self.name().==(another_volunteer.name()).&(self.project_id().==(another_volunteer.project_id())).&(self.id().==(another_volunteer.id()))
   end
 
   def self.all()
@@ -43,4 +43,8 @@ class Volunteer
       Volunteer.new({:name => name, :project_id => project_id, :id => id})
     end
 
+
+  def delete
+    DB.exec("DELETE FROM volunteers WHERE id = #{self.id()};")
+  end
 end

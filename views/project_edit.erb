@@ -14,3 +14,10 @@
 
   <button type="submit">Delete Project</button>
 </form>
+
+<form action="/volunteer_add/<%= @projects.id() %>" method="post">
+  <label for="name">Add a Volunteer:</label>
+  <input id="name"name="name" type="text">
+
+  <button type="submit">Update Volunteer</button>
+</form>

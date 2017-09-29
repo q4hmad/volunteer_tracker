@@ -45,3 +45,10 @@ delete("/projects/:id") do
   @projects = Project.all()
   erb(:index)
 end
+
+post("/volunteer_add/") do
+  name = params["name"]
+    add_volunteer = Volunteer.new({:name => name, :project_id => @project.id})
+    add_volunteer.save()
+  erb("project_edit")
+end
