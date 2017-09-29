@@ -46,9 +46,11 @@ delete("/projects/:id") do
   erb(:index)
 end
 
-post("/volunteer_add/") do
-  name = params["name"]
-    add_volunteer = Volunteer.new({:name => name, :project_id => @project.id})
-    add_volunteer.save()
-  erb("project_edit")
+post('/projects/:id/volunteers') do
+  name = params.fetch("name")
+  project_id =  Project.find(params.fetch("id").to_i())
+  @projects = Project.find(project_id)
+  @volunteer = Volunteer.new({:name => name, :project_id=> project_id})
+  @volunteer.save()
+  erb(:project_edit)
 end
