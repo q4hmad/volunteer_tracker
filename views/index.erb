@@ -1,39 +1,18 @@
-<!-- <h1>Projects Page</h1>
+ <h1>Teaching Kids to Code</h1>
 
-<p>Create a new project:</p>
+
+ <p>Create a new project:</p>
+
+ <% @projects.each do |project| %>
+   <h3><a href="projects/<%= project.id() %>"><%= project.title %></a></h3>
+ <% end %>
+
+
+
 
 <form action="/" method="post">
   <label for="title">Name of the project:</label>
   <input id="title" name="title" type="text">
 
-  <button type="submit">Create Project</button>
+  <button type="submit">Create Project:</button>
 </form>
-
-<p> Add volunteers to any project:</p>
-
-<form action="/volunteers" method="post">
-  <label for="project_id">Select a project</label>
-  <select id='project_id' name='project_id' type='text'>
-    <% @projects.each() do |project| %>
-      <option value="<%= project.id()%>"> <%= project.title() %> </option>
-    <% end %>
-  </select>
-
-  <label for="name">Name of the volunteer:</label>
-  <input id="name" name="name" type="text" required>
-
-  <button type="submit">Add name</button>
-</form>
-
-
-<% if @projects.any?() %>
-<p>Click on a project to see who volunteers:</p>
-
-<ul>
-  <% @projects.each do |project| %>
-  <li><a href="/projects/<%= project.id() %>"><%= project.name() %></a></li>
-  <% end %>
-</ul>
-<% else %>
-<p>There are no projects yet!</p>
-<% end %> -->
