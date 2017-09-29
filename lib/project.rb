@@ -45,25 +45,25 @@ class Project
     self.title().==(another_project.title()).&(self.id().==(another_project.id()))
   end
 #
-#     def volunteers
-#     list_volunteers = []
-#     volunteers = DB.exec("SELECT * FROM volunteers WHERE project_id = #{self.id()};")
-#     volunteers.each() do |volunteer|
-#       name= volunteer.fetch("name")
-#       project_id = volunteer.fetch("project_id").to_i()
-#       list_volunteers.push(Volunteer.new({:name => name, :project_id => project_id}))
-#     end
-#     list_volunteers
-#   end
+    def volunteers
+    list_volunteers = []
+    volunteers = DB.exec("SELECT * FROM volunteers WHERE project_id = #{self.id()};")
+    volunteers.each() do |volunteer|
+      name= volunteer.fetch("name")
+      project_id = volunteer.fetch("project_id").to_i()
+      list_volunteers.push(Volunteer.new({:name => name, :project_id => project_id}))
+    end
+    list_volunteers
+  end
 #
-#   def update(attributes)
-#     @title= attributes.fetch(:title, @title)
-#     @id = self.id()
-#     DB.exec("UPDATE projects SET name = '#{@title}' WHERE id = #{self.id};")
-#   end
+  def update(attributes)
+    @title= attributes.fetch(:title,  @title)
+    @id = self.id()
+    DB.exec("UPDATE projects SET title = '#{@title}' WHERE id = #{self.id};")
+  end
 #
-#   def delete
-#     DB.exec("DELETE FROM projects WHERE id = #{self.id()};")
-#     DB.exec("DELETE FROM volunteers WHERE id = #{self.id()};")
-#   end
+  def delete
+    DB.exec("DELETE FROM projects WHERE id = #{self.id()};")
+    DB.exec("DELETE FROM volunteers WHERE id = #{self.id()};")
+  end
 end
