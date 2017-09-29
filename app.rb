@@ -31,3 +31,10 @@ get("/projects/:id/edit") do
   @projects = Project.find(params.fetch("id").to_i())
   erb(:project_edit)
 end
+
+patch("/projects/:id") do
+  title = params.fetch("title")
+  @projects = Project.find(params.fetch("id").to_i())
+  @projects.update({:title => title})
+  erb(:project)
+end
