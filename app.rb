@@ -25,7 +25,9 @@ end
 get("/projects/:id") do
   @projects = Project.find(params[:id].to_i())
   erb(:project)
+end
 
-
-
+get("/projects/:id/edit") do
+  @projects = Project.find(params.fetch("id").to_i())
+  erb(:project_edit)
 end

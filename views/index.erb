@@ -3,9 +3,16 @@
 
  <p>Create a new project:</p>
 
+ <% if @projects.any?() %>
+ <ul>
  <% @projects.each do |project| %>
-   <h3><a href="projects/<%= project.id() %>"><%= project.title %></a></h3>
+   <h3><a href="projects/<%= project.id()%>"><%= project.title %></a></h3>
  <% end %>
+
+ <% else %>
+ <p>There are no projects to display.</p>
+ <% end %>
+ </ul>
 
 
 
@@ -16,3 +23,5 @@
 
   <button type="submit">Create Project:</button>
 </form>
+
+<
