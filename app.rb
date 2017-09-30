@@ -22,7 +22,7 @@ post("/") do
   erb(:index)
 end
 
-get("/projects/:id") do
+get("/this-project/:id") do
   @projects = Project.find(params[:id].to_i())
   erb(:project)
 end

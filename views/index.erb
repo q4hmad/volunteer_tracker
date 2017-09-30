@@ -2,7 +2,7 @@
 
  <% if @projects.any?() %>
    <% @projects.each do |project| %>
-     <h3><a href="projects/<%= project.id()%>"><%= project.title %></a></h3>
+     <h3><a href="/this-project/<%= project.id()%>"><%= project.title %></a></h3>
    <% end %>
  <% else %>
   <p>There are currently no projects underway. Start one here:</p>
