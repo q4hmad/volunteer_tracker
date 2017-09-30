@@ -19,7 +19,7 @@ post("/") do
   @project = Project.new({:title => @title, :id => nil})
   @project.save
   @projects = Project.all()
-   erb(:index)
+  erb(:index)
 end
 
 get("/projects/:id") do
@@ -40,17 +40,17 @@ patch("/projects/:id") do
 end
 
 delete("/projects/:id") do
-  @projects = Project.find(params.fetch("id").to_i())
-  @projects.delete()
+  @project = Project.find(params.fetch("id").to_i())
+  @project.delete()
   @projects = Project.all()
   erb(:index)
 end
 
-post('/projects/:id/volunteers') do
+post("/volunteers") do
   name = params.fetch("name")
-  project_id =  Project.find(params.fetch("id").to_i())
+  project_id = params.fetch("project_id").to_i()
   @projects = Project.find(project_id)
-  @volunteer = Volunteer.new({:name => name, :project_id=> project_id})
+  @volunteer = Volunteer.new({:name => name, :project_id => project_id})
   @volunteer.save()
-  erb(:project_edit)
+  erb(:project)
 end

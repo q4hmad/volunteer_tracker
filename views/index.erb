@@ -1,25 +1,16 @@
- <h1>Project Page</h1>
-
-
- <p>Create a new project:</p>
+ <h1>Project Planner</h1>
 
  <% if @projects.any?() %>
- <ul>
- <% @projects.each do |project| %>
-   <h3><a href="projects/<%= project.id()%>"><%= project.title %></a></h3>
- <% end %>
-
+   <% @projects.each do |project| %>
+     <h3><a href="projects/<%= project.id()%>"><%= project.title %></a></h3>
+   <% end %>
  <% else %>
- <p>There are no projects to display.</p>
+  <p>There are currently no projects underway. Start one here:</p>
  <% end %>
- </ul>
 
-
-
-
+<br>
 <form action="/" method="post">
-  <label for="title">Name of the project:</label>
+  <label for="title">New project:</label>
   <input id="title" name="title" type="text">
-
-  <button type="submit">Create Project:</button>
+  <button type="submit">Create</button>
 </form>
